@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  api:
+    image: node-base-server
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: ['npm','start']
+    restart: on-failure
+    volumes:
+      - ./build:/app/build:delegated
+      - ./config:/app/config:delegated
+      - ./package.json:/app/package.json:delegated
+    ports:
+      - '5000:5000'
+    depends_on:
+      - api-watch
+    environment:
+      - VIRTUAL_HOST=analyser.ui.docker
+      - CUBEJS_DB_HOST=localhost
+      - CUBEJS_DB_NAME=cubedb
+      - CUBEJS_DB_USER=joseph.l
+      - CUBEJS_DB_PASS=root
+      - CUBEJS_WEB_SOCKETS=true
+      - CUBEJS_DB_TYPE=postgres
+      - CUBEJS_API_SECRET=SECRET
+    networks:
+      - server-network
+  api-watch:
+    image: node-base-server-watcher
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: ['npm', 'run', 'watch']
+    volumes:
+      - ./src:/app/src:delegated
+      - ./build:/app/build:delegated
+      - ./package.json:/app/package.json:delegated
+    logging:
+      options:
+        max-size: 10m
+    networks:
+      - server-network
+networks:
+  server-network:
+    driver: bridge
+

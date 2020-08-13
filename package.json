@@ -1,0 +1,65 @@
+{
+  "name": "NodeBase",
+  "version": "0.0.0-semantically-released",
+  "description": "Server For Blockchain Analyzer Public Networks",
+  "main": "app.js",
+  "author": "Joseph Lawrence Thevary",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.ey.npme.io/"
+  },
+  "scripts": {
+    "start": "node build/index.js",
+    "dev": "nodemon build/index.js",
+    "build": "cod-scripts build -d build",
+    "watch": "npm run build -- --watch",
+    "format": "cod-scripts format",
+    "lint": "cod-scripts lint",
+    "lint:commit": "cod-scripts commitlint",
+    "test": "cod-scripts test",
+    "test:ci": "CI=true cod-scripts test --coverage"
+  },
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/cod-scripts/eslint.js"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "cod-scripts pre-commit",
+      "commit-msg": "cod-scripts commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "engines": {
+    "node": "12.13.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.10.2",
+    "@cubejs-backend/postgres-driver": "^0.19.54",
+    "@cubejs-backend/server": "^0.19.55",
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.0",
+    "body-parser": "^1.19.0",
+    "config": "^3.3.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-validation": "^1.0.3",
+    "express-winston": "^2.4.0",
+    "helmet": "^3.5.0",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^7.2.1",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.9.27",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "cod-scripts": "^4.0.3",
+    "expect": "^1.20.2",
+    "faker": "github:Marak/faker.js",
+    "nodemon": "^2.0.4",
+    "supertest": "^3.4.2"
+  }
+}
